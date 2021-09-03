@@ -1,0 +1,26 @@
+name: "Add Grafana annotation action"
+description: "Uses add-grafana-annotation GCF to add annotations in Grafana"
+inputs:
+  gcf_url:
+    description: "The add-grafana-annotation GCF URL"
+    required: true
+  dashboard_name:
+    description: "Dashboard name"
+    required: true
+  text:
+    description: "Annotation text"
+    required: true
+  tags:
+    description: "Annotation tags"
+    required: true
+    default: '["github-action"]'
+runs:
+  using: "composite"
+  steps:
+    - name: Use Grafana Cloud Function to create annotation
+      shell: bash
+      run: |
+        curl -XPOST \
+        -H 'Content-Type: application/json' \
+        -d '{"dashboard_name": ${{ inputs.dashboard_name }}, "text": ${{ inputs.text }}, "tags": ${{ inputs.tags}}' \
+        ${{ inputs.gcf_url }}
