@@ -20,7 +20,7 @@ runs:
     - name: Use Grafana Cloud Function to create annotation
       shell: bash
       run: |
-        curl -XPOST \
+        curl --silent -XPOST \
         -H 'Content-Type: application/json' \
-        -d '{"dashboard_name": "${{ inputs.dashboard_name }}"", "text": "${{ inputs.text }}", "tags": "${{ inputs.tags}}"}' \
+        -d '{"dashboard_name": "${{ inputs.dashboard_name }}"", "text": "${{ inputs.text }}", "tags": ${{ inputs.tags}}}' \
         ${{ inputs.gcf_url }}
